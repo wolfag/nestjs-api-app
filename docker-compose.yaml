@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  dev-db:
+    image: postgres:15.0
+    container_name: nestjs-api-app-dev-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: testdb
+    ports:
+      - '5434:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data/
+    networks:
+      - nestjs-network
+  test-db:
+    image: postgres:15.0
+    container_name: nestjs-api-app-test-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: testdb
+    ports:
+      - '5437:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data/
+    networks:
+      - nestjs-network
+networks:
+  nestjs-network:
+    driver: bridge
+
+# start
+# docker compose up -d
+
+# stop
+# docker compose down
+
+# remove
+# docker compose rm nestjs-api-app-dev-db-1 --stop --force --volumes
+
+# access bashshell
+# docker exec -it nestjs-api-app-dev-db-1 bash
+
+# check db
+# psql -U postgres -W testdb
+# \dt
+# exit
